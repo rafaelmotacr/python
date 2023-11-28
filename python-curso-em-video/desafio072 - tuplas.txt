@@ -1,0 +1,5 @@
+o comando index mostra onde x número aparece em uma tupla tupla.index(x)
+da mesma forma, o comando count mostra quantas vezes ele aparece tupla.count.(x)
+enumerate mostra as posições de produtos numa tupla 
+o método sorted organiza alfabeticamente uma tupla
+diferentes tipos de dados podem ser guardados numa tupla ex : for pos, comida in enumerate (lanche)  
