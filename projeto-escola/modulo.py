@@ -6,13 +6,16 @@ class personDate:
         self.month = month
         self.year = year
 
+    def toString(self):
+        return f'({self.day:0>2}/{self.month:0>2}/{self.year})'
+
 
 class student:
-    def __init__(self,name = "No name", age = 0, code = "NULL", cpf = "NULL", gender = "NULL", psdata = personDate()):
+    def __init__(self,name = "No name", age = 0, code = "NULL", CPF = "NULL", gender = "NULL", psdata = personDate()):
         self._name = name
         self._age = age
         self._code = code
-        self._cpf = cpf
+        self._cpf = CPF
         self._gender = gender
 
 
@@ -28,24 +31,24 @@ class student:
         self.code = code
 
 
-    def setCpf(self, cpf):
-        self.cpf = cpf
+    def setCpf(self, CPF):
+        self.cpf = CPF
 
     
     def setGender(self, gender):
         self.gender = gender
 
 
-colors =  {
-        'NULL':'\033[m',
-        'gray':'\033[30m',
-        'red': '\033[31m',
-        'green': '\033[32m',
-        'yellow': '\033[33m',
-        'blue': '\033[34m',
-        'purple': '\033[35m',
-        'ligth-blue': '\033[36m',
-    }
+colors = {
+    'NULL':'\033[m',
+    'gray':'\033[30m',
+    'red': '\033[31m',
+    'green': '\033[32m',
+    'yellow': '\033[33m',
+    'blue': '\033[34m',
+    'purple': '\033[35m',
+    'ligth-blue': '\033[36m',
+}
 
 
 effects = {
@@ -76,7 +79,7 @@ def readInt(string = 'NULL', color = 'green',):
 
 def inputf(string = 'NULL', color = 'green', mode = 'str'):
     if mode == 'str':  
-        tmp = input(f'{string}{colors[color]}')
+        tmp = input(f'> {string}{colors[color]}')
     elif mode == 'int':
         tmp = readInt(string, color)
     print('\033[m', end = '')
@@ -91,6 +94,47 @@ def mainMenu():
     print('[3] - UPDATE STUDENT')
     print('[4] - VIEW STUDENTS')
     tittle('MAIN MENU', '=', line = True)
+
+
+def readAge():
+    birthDay = personDate()
+    currentYear = datetime.now().year
+    day = month = year = 0
+
+    while True:
+        day = inputf('Day: ', mode = 'int')
+        if not(32 > day and  day > 0):
+            printf('Ivalid day!', 'red', 'underline')
+            continue
+        break
+
+    while True:
+        month = inputf('Month: ', mode = 'int')
+        if not(13 > month and  month > 0):
+            printf('Ivalid Month!', 'red', 'underline')
+            continue
+        break
+
+    while True:
+        year = inputf('Year: ', mode = 'int')
+        if not(currentYear > year and  year > 0 and 1980 < year):
+            printf('Ivalid Year!', 'red', 'underline')
+            continue
+        break
+
+    birthDay.day = day
+    birthDay.month = month
+    birthDay.year = year
+    printf(f'the date {birthDay.toString()} was defined as the birthday.', 'blue', 'underline')
+    return birthDay
+
+
+def readCPF():
+    CPF = inputf('CPF: ')
+    if len(CPF) != 14:
+        printf('Your CPF must have at exactly 13 digits!', 'red', 'underline')
+        return readCPF()
+    return CPF
 
 
 def readGender():
@@ -118,44 +162,6 @@ def readName():
         break
     return name
         
-        
-
-def readAge():
-    birtDay = personDate()
-    currentYear = datetime.now().year
-    day = month = year = 0
-
-    while True:
-        day = inputf('Day: ', mode = 'int')
-        if not(32 > day and  day > 0):
-            printf('Ivalid day!', 'red', 'underline')
-            continue
-        break
-
-    while True:
-        month = inputf('Month: ', mode = 'int')
-        if not(13 > month and  month > 0):
-            printf('Ivalid Month!', 'red', 'underline')
-            continue
-        break
-
-    while True:
-        year = inputf('Year: ', mode = 'int')
-        if not(currentYear > year and  year > 0 and 1980 < year):
-            printf('Ivalid Year!', 'red', 'underline')
-            continue
-        break
-
-
-
-
-"""
-    idade 
-    return age
-
-"""
-
-
 
 def tittle(string, char, color = "NULL", line = False):
     
