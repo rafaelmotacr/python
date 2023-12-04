@@ -8,9 +8,7 @@ while(not quit):
     mainMenu()
     choice = input('> Your Choice: ')
     if(choice == '1'):
-        #createstudent()
-        readName()
-        readGender()
+        oi = readAge()
         print('CREATE')
     elif(choice == '2'):
         #removestudent()

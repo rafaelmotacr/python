@@ -1,7 +1,14 @@
-import _datetime
+from datetime import datetime
+
+class personDate:
+    def __init__(self,day = 0, month = 0, year = 0):
+        self.day = day
+        self.month = month
+        self.year = year
+
 
 class student:
-    def __init__(self,name = "No name", age = 0, code = "NULL", cpf = "NULL", gender = "NULL" ):
+    def __init__(self,name = "No name", age = 0, code = "NULL", cpf = "NULL", gender = "NULL", psdata = personDate()):
         self._name = name
         self._age = age
         self._code = code
@@ -55,10 +62,25 @@ def printf(string = "NULL", color = "NULL", effect = "NULL"):
     print(f'> {effects[effect]}{colors[color]}{string}\033[m')
 
 
-def inputf(string = 'NULL', color = 'green'):
-     tmp = input(f'{string}{colors[color]}')
-     print('\033[m', end = '')
-     return tmp
+def readInt(string = 'NULL', color = 'green',):
+    tmp = input(f'> {string}{colors[color]}')
+    print('\033[m', end='')
+    try:
+        tmp = int(tmp)
+    except ValueError:
+        printf('This entry must be a integer!', 'red', 'underline')
+        return readInt(string, color)
+    else:
+        return tmp
+
+
+def inputf(string = 'NULL', color = 'green', mode = 'str'):
+    if mode == 'str':  
+        tmp = input(f'{string}{colors[color]}')
+    elif mode == 'int':
+        tmp = readInt(string, color)
+    print('\033[m', end = '')
+    return tmp
 
 
 def mainMenu():
@@ -77,7 +99,7 @@ def readGender():
         gender = inputf("> Gender(F/M): ")[0].strip().upper()
         if gender not in 'FM':
             printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
-    printf(f'{gender} was defined as the gender', 'blue', 'underline')
+    printf(f'{gender} was defined as the gender.', 'blue', 'underline')
     return gender
 
 
@@ -93,13 +115,45 @@ def readName():
             continue
         name = name.title()
         printf(f'{name} Was defined as the name.', 'blue', 'underline')
-        return name
         break
+    return name
+        
         
 
-# def read
+def readAge():
+    birtDay = personDate()
+    currentYear = datetime.now().year
+    day = month = year = 0
+
+    while True:
+        day = inputf('Day: ', mode = 'int')
+        if not(32 > day and  day > 0):
+            printf('Ivalid day!', 'red', 'underline')
+            continue
+        break
+
+    while True:
+        month = inputf('Month: ', mode = 'int')
+        if not(13 > month and  month > 0):
+            printf('Ivalid Month!', 'red', 'underline')
+            continue
+        break
+
+    while True:
+        year = inputf('Year: ', mode = 'int')
+        if not(currentYear > year and  year > 0 and 1980 < year):
+            printf('Ivalid Year!', 'red', 'underline')
+            continue
+        break
 
 
+
+
+"""
+    idade 
+    return age
+
+"""
 
 
 
