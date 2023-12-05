@@ -13,10 +13,8 @@ while (not quit):
         break
     if choice == '1':
         createStudent(studentsList)
-        print('CREATE')
     elif choice == '2':
         removeStudent(studentsList)
-        print('REMOVE')
     elif choice == 3:
         #updateStudent(
         print('UPDATE')

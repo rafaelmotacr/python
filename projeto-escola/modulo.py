@@ -69,6 +69,9 @@ class student:
         self.name = name
 
 
+    def getCode(self):
+       return self.code 
+
 
 def createStudent(studentsList = []):
     tittle('CREATE STUDENT','=', 'green')
@@ -79,20 +82,20 @@ def createStudent(studentsList = []):
     tmp.setGender(readGender())
     tmp.setCpf(readCPF())
     tmp.setCode(len(studentsList) + 1)
-    printf('student successfully registered!', 'yellow', 'bold')
+    printf('Student successfully registered!', 'yellow', 'bold')
     studentsList.append(tmp)
 
 
 def validateStudent(target = str(), studentList = []):
     for student in studentList:
-        if student.code == target:
+        if student.getCode() == target:
             return True
     return False
 
 
 def searchStudent(target = str(), studentList = []):
     for student in studentList:
-        if student.code == target:
+        if student.getCode() == target:
             return student
 
 
@@ -112,11 +115,11 @@ def removeStudent(studentsList = []):
         return
     elif choice == '1':
 
-        code = input('Enter the student code: ')
+        code = inputf('Enter the student code: ')
 
-        if validateStudent():
+        if validateStudent(code, studentsList):
 
-            target = searchStudent(code)
+            target = searchStudent(code, studentsList)
             printf('Student suceffuly removed.', 'blue', 'underline')
             studentsList.remove(target)
 
@@ -126,24 +129,22 @@ def removeStudent(studentsList = []):
             return removeStudent(studentsList)
 
     elif choice == '2':
+
         printStudents(studentsList)
         code = inputf('Your choice: ', mode ='int')
+
         if(code > len(studentsList) or code <= 0):
+
             printf('Invalid student! Try again!', 'red', 'underline')
             return removeStudent(studentsList)
+        
         else:
+
             printf('Student suceffuly removed.', 'blue', 'underline')
             studentsList.pop(code - 1)
+
     else:
         printf('Invalid choice! Try again!', 'red', 'underline')
-
-
-            
-        
-
-
-
-
 
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
