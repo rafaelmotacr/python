@@ -49,12 +49,6 @@ class student:
         self.name = name
 
 
-    def toString(self):
-        print(f'{self.name}')
-        print(f'{self.psdata.toString()}')
-        print(f'{self.code}')
-
-
 colors = {
     'NULL':        '\033[m',
     'gray':        '\033[30m',
@@ -123,6 +117,17 @@ def mainMenu():
     print('[4] - VIEW STUDENTS')
     tittle('MAIN MENU', '=', line = True)
     return inputf('Your Choice: ')
+
+
+def printStudents(studentsList = []):
+    tittle('LISTING STUDENTS', '=', 'green')
+    for index in range (0, len(studentsList)):
+        printf(f'{index + 1} - Name: {studentsList[index].name}.')
+        printf(f'CPF: {studentsList[index].cpf}.')
+        printf(f'Code: {studentsList[index].code}.')
+        printf(f'Gender: {studentsList[index].gender}.')
+        printf(f'Age: {studentsList[index].age}.')
+    tittle('LISTING STUDENTS', '=', line = True)
 
 
 def readBirthday():
