@@ -147,6 +147,69 @@ def removeStudent(studentsList = []):
         printf('Invalid choice! Try again!', 'red', 'underline')
 
 
+def selectStudent(studentsList = []):
+    choice = code = 0
+
+    target = student()
+
+    tittle('STUDENT SELECT MENU','=', 'purple')
+    print('[0] - CANCEL')
+    print('[1] - UPDATE USING CODE')
+    print('[2] - VIEW STUDENTS AND UPDATE')
+    tittle('UPDATE MENU','=', 'purple', True)
+
+    choice = inputf('Your choice: ', mode= 'str')
+
+    if choice == '0':
+        return
+    elif choice == '1':
+
+        code = inputf('Enter the student code: ')
+
+        if validateStudent(code, studentsList):
+
+            target = searchStudent(code, studentsList)
+            printf('Student suceffuly removed.', 'blue', 'underline')
+            studentsList.remove(target)
+
+        else:
+
+            printf('Invalid student! Try again!', 'red', 'underline')
+            return selectStudent(studentsList)
+            
+    elif choice == '2':
+
+        printStudents(studentsList)
+        code = inputf('Your choice: ', mode ='int')
+
+        if(code > len(studentsList) or code <= 0):
+
+            printf('Invalid student! Try again!', 'red', 'underline')
+            return selectStudent(studentsList)
+        
+        else:
+
+            printf('Student suceffuly removed.', 'blue', 'underline')
+            studentsList.pop(code - 1)
+
+    else:
+        printf('Invalid choice! Try again!', 'red', 'underline')
+
+
+
+def updateStudent(person = student()):
+  tittle('UPDATE MENU', '=', 'purple')
+  printf("[0] - VOLTAR\n");
+  printf("[1] - ATUALIZAR CPF\n");
+  printf("[2] - ATUALIZAR DATA DE NASCIMENTO\n");
+  printf("[3] - ATUALIZAR NOME\n");
+  printf("[4] - ATUALIZAR SEXO\n");
+  printf("[5] - VER DADOS\n");
+  tittle("sua escolha", '-', 1);
+
+
+
+
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
     print(f'> {effects[effect]}{colors[color]}{string}\033[m')
 
@@ -183,14 +246,32 @@ def mainMenu():
     return inputf('Your Choice: ')
 
 
+def updateMenu():
+    tittle('UPDATE MENU', '=', 'purple')
+    print("[0] - CANCEL\n");
+    print("[1] - UPDATE CPF\n");
+    print("[2] - UPDATE BIRTHDAY\n");
+    print("[3] - UPDATE NAME\n");
+    print("[4] - UPDATE GENDER\n");
+    print("[5] - SEE DATA\n");
+    tittle("Your choice", '-', True);
+
+
+
+def printPerson(num = int(), person = student()):
+    printf(f'{num + 1} - Name: {person.name}.')
+    printf(f'CPF: {person.cpf}.')
+    printf(f'Code: {person.code}.')
+    printf(f'Gender: {person.gender}.')
+    printf(f'Age: {person.age}.')
+
+
 def printStudents(studentsList = []):
     tittle('LISTING STUDENTS', '=', 'green')
+    if(len(studentsList) == 0):
+        printf('There are no students righ now...', 'red', 'underline')
     for index in range (0, len(studentsList)):
-        printf(f'{index + 1} - Name: {studentsList[index].name}.')
-        printf(f'CPF: {studentsList[index].cpf}.')
-        printf(f'Code: {studentsList[index].code}.')
-        printf(f'Gender: {studentsList[index].gender}.')
-        printf(f'Age: {studentsList[index].age}.')
+        printPerson(index, studentsList[index])
     tittle('LISTING STUDENTS', '=', line = True)
 
 
