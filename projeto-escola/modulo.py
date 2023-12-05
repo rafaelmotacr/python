@@ -3,6 +3,26 @@ from datetime import datetime
 currentYear = datetime.now().year
 defaultcode = f'{datetime.now().year}{datetime.now().month}'
 
+colors = {
+    'NULL':        '\033[m',
+    'gray':        '\033[30m',
+    'red':         '\033[31m',
+    'green':       '\033[32m',
+    'yellow':      '\033[33m',
+    'blue':        '\033[34m',
+    'purple':      '\033[35m',
+    'ligth-blue':  '\033[36m',
+}
+effects = {
+    'NULL':        '\033[m',
+    'bold':        '\033[1m',
+    'test':        '\033[2m',
+    'italic':      '\033[3m',
+    'underline':   '\033[4m',
+    'shine':       '\033[5m'
+}
+
+
 class personDate:
     def __init__(self,day = 0, month = 0, year = 0):
         self.day = day
@@ -49,29 +69,8 @@ class student:
         self.name = name
 
 
-colors = {
-    'NULL':        '\033[m',
-    'gray':        '\033[30m',
-    'red':         '\033[31m',
-    'green':       '\033[32m',
-    'yellow':      '\033[33m',
-    'blue':        '\033[34m',
-    'purple':      '\033[35m',
-    'ligth-blue':  '\033[36m',
-}
 
-
-effects = {
-    'NULL':        '\033[m',
-    'bold':        '\033[1m',
-    'test':        '\033[2m',
-    'italic':      '\033[3m',
-    'underline':   '\033[4m',
-    'shine':       '\033[5m'
-}
-
-
-def createStudent(studentsList= []):
+def createStudent(studentsList = []):
     tmp = student()
     tmp.setName(readName())
     tmp.setBirthday(readBirthday())
@@ -81,6 +80,64 @@ def createStudent(studentsList= []):
     tmp.setCode(len(studentsList) + 1)
     printf('student successfully registered!', 'yellow', 'bold')
     studentsList.append(tmp)
+
+
+def validateStudent(target = str(), studentList = []):
+    for student in studentList:
+        if student.code == target:
+            return True
+    return False
+
+
+def searchStudent(target = str(), studentList = []):
+    for student in studentList:
+        if student.code == target:
+            return student
+
+
+def removeStudent(studentsList = []):
+
+    choice, code = 0
+    target = student()
+
+    tittle('REMOVE MENU','=', 'red')
+    print('[0] - CANCEL')
+    print('[1] - REMOVE USING CODE')
+    print('[1] - VIEW STUDENTS AND REMOVE')
+    tittle('REMOVE MENU','=', 'red', False)
+    choice = inputf('Your choice: ', mode= 'str')
+
+    if choice == '0':
+        return
+    elif choice == '1':
+
+        code = input('Enter the student code: ')
+
+        if validateStudent():
+
+            target = searchStudent(code)
+            printf('Student suceffuly removed.', 'blue', 'underline')
+            return studentsList.remove(target)
+
+        else:
+
+            printf('Invalid student! Try again!', 'red', 'underline')
+            return removeStudent(studentsList)
+
+    elif choice == '2':
+        printStudents(studentsList)
+        choice = inputf('Your choice: ')
+        if(choice > len(studentsList)):
+            printf('Invalid student! Try again!', 'red', 'underline')
+            return removeStudent(studentsList)
+        else:
+            printf('Student suceffuly removed.', 'blue', 'underline')
+            
+        
+
+
+
+
 
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
