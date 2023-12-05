@@ -29,9 +29,22 @@ effects = {
 
 class personDate:
     def __init__(self,day = 0, month = 0, year = 0):
+        self._day = day
+        self._month = month
+        self._year = year
+
+
+    def setDay(self, day):
         self.day = day
+
+    
+    def setMonth(self, month):
         self.month = month
+
+
+    def setYear(self, year):
         self.year = year
+
 
     def toString(self):
         return f'({self.day:0>2}/{self.month:0>2}/{self.year})'
@@ -119,13 +132,6 @@ def printPerson(num = int(), person = student(), isTheOnly = False):
     printf(f'Age: {person.getAge()}.')
 
 
-def printStudents(studentsList = []):
-    tittle('LISTING STUDENTS', '=', 'green')
-    if(len(studentsList) == 0):
-        printf('There are no students righ now. Come back later...', 'red', 'underline')
-    for index in range (0, len(studentsList)):
-        printPerson(index, studentsList[index])
-    tittle('LISTING STUDENTS', '=', line = True)
 
 
 def removeStudent(studentsList = []):
@@ -138,7 +144,7 @@ def removeStudent(studentsList = []):
         return
 
     tittle('REMOVE MENU','=', 'red')
-    print('[0] - CANCEL')
+    print('[0] - BACK')
     print('[1] - REMOVE USING CODE')
     print('[2] - VIEW STUDENTS AND REMOVE')
     tittle('REMOVE MENU','=', 'red', True)
@@ -163,7 +169,7 @@ def removeStudent(studentsList = []):
 
     elif choice == '2':
 
-        printStudents(studentsList)
+        printList(studentsList)
         code = inputf('Your choice: ', mode ='int')
 
         if(code > len(studentsList) or code <= 0):
@@ -190,7 +196,7 @@ def updateCentral(studentsList = []):
     target = student()
 
     tittle('UPDATE MENU','=', 'purple')
-    print('[0] - CANCEL')
+    print('[0] - BACK')
     print('[1] - UPDATE USING CODE')
     print('[2] - VIEW STUDENTS AND UPDATE')
     tittle('UPDATE MENU','=', 'purple', True)
@@ -215,7 +221,7 @@ def updateCentral(studentsList = []):
             
     elif choice == '2':
 
-        printStudents(studentsList)
+        printList(studentsList)
         code = inputf('Your choice: ', mode ='int')
 
         if(code > len(studentsList) or code <= 0):
@@ -258,7 +264,7 @@ def updateStudent(person = student()):
 
 def mainMenu():
     tittle("MAIN MENU", '=', 'yellow')
-    print('[0] - QUIT')
+    print('[0] - EXIT')
     print('[1] - CREATE STUDENT')
     print('[2] - REMOVE STUDENT')
     print('[3] - UPDATE STUDENT')
@@ -269,7 +275,7 @@ def mainMenu():
 
 def updateMenu(string = str()):
     tittle(f'{string.upper()}', '=', 'purple')
-    print('[0] - CANCEL')
+    print('[0] - BACK')
     print('[1] - SEE DATA')
     print('[2] - UPDATE BIRTHDAY')
     print('[3] - UPDATE CPF')
@@ -343,9 +349,10 @@ def readBirthday():
             continue
         break
 
-    birthDay.day = day
-    birthDay.month = month
-    birthDay.year = year
+    birthDay.setDay(day)
+    birthDay.setMonth(month)
+    birthDay.setYear(year)
+
     printf(f'The date {birthDay.toString()} was defined as the birthday.', 'blue', 'underline')
     return birthDay
 
@@ -398,3 +405,37 @@ def validateStudent(target = str(), studentList = []):
         if student.getCode() == target:
             return True
     return False
+
+
+# Print functions
+
+def printMenu(studentsList):
+    if(len(studentsList) == 0):
+        printf('There are no students to show righ now. Come back later...', 'red', 'underline')
+    
+    tittle('LIST MENU', '-', 'blue')
+    print('[0] - BACK')
+    print('[1] - SORT BY AGE')
+    print('[2] - SORT BY DEFAULT')
+    print('[3] - SORT BY NAME')
+    tittle('LIST MENU', '-', 'blue', True)
+    printMenuChoice = inputf('Your choice: ')
+    switch (escolha_menu_listagem)
+
+def printList(studentsList = []):
+    tittle('LISTING STUDENTS', '=', 'green')
+    for index in range (0, len(studentsList)):
+        printPerson(index, studentsList[index])
+        if not index == len(studentsList) - 1:
+            tittle('LISTING STUDENTS', '=', line = True)
+
+
+def sortByName(studentsList):
+    tmp = sorted(studentsList, key = lambda student: student.name)
+    printList(tmp)
+
+
+def sortByAge(studentsList):
+    tmp = sorted(studentsList, key = lambda student: student.age)
+    printList(tmp)
+
