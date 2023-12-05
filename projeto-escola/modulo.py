@@ -71,6 +71,7 @@ class student:
 
 
 def createStudent(studentsList = []):
+    tittle('CREATE STUDENT','=', 'green')
     tmp = student()
     tmp.setName(readName())
     tmp.setBirthday(readBirthday())
@@ -97,14 +98,14 @@ def searchStudent(target = str(), studentList = []):
 
 def removeStudent(studentsList = []):
 
-    choice, code = 0
+    choice = code = 0
     target = student()
 
     tittle('REMOVE MENU','=', 'red')
     print('[0] - CANCEL')
     print('[1] - REMOVE USING CODE')
-    print('[1] - VIEW STUDENTS AND REMOVE')
-    tittle('REMOVE MENU','=', 'red', False)
+    print('[2] - VIEW STUDENTS AND REMOVE')
+    tittle('REMOVE MENU','=', 'red', True)
     choice = inputf('Your choice: ', mode= 'str')
 
     if choice == '0':
@@ -117,7 +118,7 @@ def removeStudent(studentsList = []):
 
             target = searchStudent(code)
             printf('Student suceffuly removed.', 'blue', 'underline')
-            return studentsList.remove(target)
+            studentsList.remove(target)
 
         else:
 
@@ -126,12 +127,17 @@ def removeStudent(studentsList = []):
 
     elif choice == '2':
         printStudents(studentsList)
-        choice = inputf('Your choice: ')
-        if(choice > len(studentsList)):
+        code = inputf('Your choice: ', mode ='int')
+        if(code > len(studentsList) or code <= 0):
             printf('Invalid student! Try again!', 'red', 'underline')
             return removeStudent(studentsList)
         else:
             printf('Student suceffuly removed.', 'blue', 'underline')
+            studentsList.pop(code - 1)
+    else:
+        printf('Invalid choice! Try again!', 'red', 'underline')
+
+
             
         
 

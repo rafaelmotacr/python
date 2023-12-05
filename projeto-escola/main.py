@@ -15,10 +15,10 @@ while (not quit):
         createStudent(studentsList)
         print('CREATE')
     elif choice == '2':
-        #removestudent()
+        removeStudent(studentsList)
         print('REMOVE')
     elif choice == 3:
-        #updateStudent()
+        #updateStudent(
         print('UPDATE')
     elif choice == '4':
         printStudents(studentsList)
