@@ -5,18 +5,18 @@ from modulo import *
 quit = False
 studentsList = []
  
-while (not quit):
+while not quit:
     choice = mainMenu()
     if choice == '0': 
         tittle('LEAVING..','=', 'red')
         quit = True
-        break
+        continue
     if choice == '1':
         createStudent(studentsList)
     elif choice == '2':
         removeStudent(studentsList)
-    elif choice == 3:
-        #updateStudent(
+    elif choice == '3':
+        updateCentral(studentsList)
         print('UPDATE')
     elif choice == '4':
         printStudents(studentsList)

@@ -147,12 +147,12 @@ def removeStudent(studentsList = []):
         printf('Invalid choice! Try again!', 'red', 'underline')
 
 
-def selectStudent(studentsList = []):
+def updateCentral(studentsList = []):
     choice = code = 0
 
     target = student()
 
-    tittle('STUDENT SELECT MENU','=', 'purple')
+    tittle('UPDATE MENU','=', 'purple')
     print('[0] - CANCEL')
     print('[1] - UPDATE USING CODE')
     print('[2] - VIEW STUDENTS AND UPDATE')
@@ -169,13 +169,12 @@ def selectStudent(studentsList = []):
         if validateStudent(code, studentsList):
 
             target = searchStudent(code, studentsList)
-            printf('Student suceffuly removed.', 'blue', 'underline')
-            studentsList.remove(target)
+            updateStudent(target)
 
         else:
 
             printf('Invalid student! Try again!', 'red', 'underline')
-            return selectStudent(studentsList)
+            return updateCentral(studentsList)
             
     elif choice == '2':
 
@@ -185,12 +184,11 @@ def selectStudent(studentsList = []):
         if(code > len(studentsList) or code <= 0):
 
             printf('Invalid student! Try again!', 'red', 'underline')
-            return selectStudent(studentsList)
+            return updateCentral(studentsList)
         
         else:
 
-            printf('Student suceffuly removed.', 'blue', 'underline')
-            studentsList.pop(code - 1)
+            updateStudent(studentsList[code -1])
 
     else:
         printf('Invalid choice! Try again!', 'red', 'underline')
@@ -198,16 +196,27 @@ def selectStudent(studentsList = []):
 
 
 def updateStudent(person = student()):
-  tittle('UPDATE MENU', '=', 'purple')
-  printf("[0] - VOLTAR\n");
-  printf("[1] - ATUALIZAR CPF\n");
-  printf("[2] - ATUALIZAR DATA DE NASCIMENTO\n");
-  printf("[3] - ATUALIZAR NOME\n");
-  printf("[4] - ATUALIZAR SEXO\n");
-  printf("[5] - VER DADOS\n");
-  tittle("sua escolha", '-', 1);
-
-
+    quit = False
+    while not quit:
+        choice = updateMenu(f'{person.name}')
+        tittle('> your choice', '=', line = True)
+        if choice == '0':
+            quit = True
+            continue
+        elif choice == '1':
+            printPerson(0, person, True)
+        elif choice == '2':
+            person.setBirthday(readBirthday())
+            person.setAge()
+        elif choice == '3':
+            person.setCpf(readCPF)
+        elif choice == '4':
+            person.setGender(readGender())
+        elif choice == '5':
+            person.setName(readName)
+        else:
+            printf('Invalid choice! Try again!', 'red', 'underline')
+            updateStudent(person)
 
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
@@ -246,20 +255,24 @@ def mainMenu():
     return inputf('Your Choice: ')
 
 
-def updateMenu():
-    tittle('UPDATE MENU', '=', 'purple')
-    print("[0] - CANCEL\n");
-    print("[1] - UPDATE CPF\n");
-    print("[2] - UPDATE BIRTHDAY\n");
-    print("[3] - UPDATE NAME\n");
-    print("[4] - UPDATE GENDER\n");
-    print("[5] - SEE DATA\n");
-    tittle("Your choice", '-', True);
+def updateMenu(string = str()):
+    tittle(f'{string.upper()}', '=', 'purple')
+    print('[0] - CANCEL')
+    print('[1] - SEE DATA')
+    print('[2] - UPDATE BIRTHDAY')
+    print('[3] - UPDATE CPF')
+    print('[4] - UPDATE GENDER')
+    print('[5] - UPDATE NAME')
+    tittle(f'{string.upper()}', '=', 'purple', True)
+    return inputf('Your Choice: ')
 
 
 
-def printPerson(num = int(), person = student()):
-    printf(f'{num + 1} - Name: {person.name}.')
+def printPerson(num = int(), person = student(), isTheOnly = False):
+    if isTheOnly:
+        printf(f'Name: {person.name}.')
+    else:
+        printf(f'{num + 1} - Name: {person.name}.')
     printf(f'CPF: {person.cpf}.')
     printf(f'Code: {person.code}.')
     printf(f'Gender: {person.gender}.')
