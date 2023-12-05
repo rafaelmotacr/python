@@ -1,7 +1,11 @@
 from datetime import datetime
 
 currentYear = datetime.now().year
-defaultcode = f'{datetime.now().year}{datetime.now().month}'
+defaultCode = str ()
+if(datetime.now().month < 7):
+   defaultCode = f'{datetime.now().year}001'
+else:
+    defaultCode = f'{datetime.now().year}002'
 
 colors = {
     'NULL':        '\033[m',
@@ -53,7 +57,7 @@ class student:
 
 
     def setCode(self, pos):
-        self.code = defaultcode + f'{pos}'
+        self.code = defaultCode + f'{pos}'
         printf(f"{self.name}'s code is {self.code}.", 'blue', 'underline')    
 
 
@@ -177,8 +181,12 @@ def removeStudent(studentsList = []):
 
 
 def updateCentral(studentsList = []):
-    choice = code = 0
+    
+    if len(studentsList) == 0:
+        printf("There aren't students to update. Come back later...", 'red', 'underline')
+        return
 
+    choice = code = 0
     target = student()
 
     tittle('UPDATE MENU','=', 'purple')
@@ -290,6 +298,7 @@ def inputf(string = 'NULL', color = 'green', mode = 'str'):
         tmp = readInt(string, color)
     print('\033[m', end = '')
     return tmp
+
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
     print(f'> {effects[effect]}{colors[color]}{string}\033[m')
