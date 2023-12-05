@@ -21,7 +21,9 @@ while (not quit):
         #updateStudent()
         print('UPDATE')
     elif choice == '4':
-        #viewsStudents:()
+        for i in range (0, len(studentsList)):
+            print(f'{i + 1} - ', end = '')
+            student.toString()
         print('VIEW')
     else:
         tittle(f'INVALID OPTION!', '~', 'red')

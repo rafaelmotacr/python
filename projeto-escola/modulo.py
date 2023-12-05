@@ -1,5 +1,8 @@
 from datetime import datetime
 
+currentYear = datetime.now().year
+defaultcode = f'{datetime.now().year}{datetime.now().month}'
+
 class personDate:
     def __init__(self,day = 0, month = 0, year = 0):
         self.day = day
@@ -17,59 +20,73 @@ class student:
         self._code = code
         self._cpf = CPF
         self._gender = gender
+        self._psdata = personDate()
 
 
-    def setName(self,name):
-        self.name = name
-    
+    def setAge(self):
+        self.age = currentYear - self.psdata.year
+        printf(f"{self.name}'s age is {self.age}.", 'blue', 'underline')
 
-    def setAge(self,age):
-        self.age = age
+
+    def setBirthday(self, birthday = personDate()):
+        self.psdata = birthday
 
 
     def setCode(self, pos):
         self.code = defaultcode + f'{pos}'
+        printf(f"{self.name}'s code is {self.code}.", 'blue', 'underline')    
 
 
     def setCpf(self, CPF):
         self.cpf = CPF
 
-    
+
     def setGender(self, gender):
         self.gender = gender
 
-currentYear = datetime.now().year
-defaultcode = f'{datetime.now().year}{datetime.now().month}'
+
+    def setName(self,name):
+        self.name = name
+
+
+    def toString(self):
+        print(f'{self.name}')
+        print(f'{self.psdata.toString()}')
+        print(f'{self.code}')
+
 
 colors = {
-    'NULL':'\033[m',
-    'gray':'\033[30m',
-    'red': '\033[31m',
-    'green': '\033[32m',
-    'yellow': '\033[33m',
-    'blue': '\033[34m',
-    'purple': '\033[35m',
-    'ligth-blue': '\033[36m',
+    'NULL':        '\033[m',
+    'gray':        '\033[30m',
+    'red':         '\033[31m',
+    'green':       '\033[32m',
+    'yellow':      '\033[33m',
+    'blue':        '\033[34m',
+    'purple':      '\033[35m',
+    'ligth-blue':  '\033[36m',
 }
 
 
 effects = {
-    'NULL':'\033[m',
-    'bold':'\033[1m',
-    'test':'\033[2m',
-    'italic':'\033[3m',
-    'underline':'\033[4m',
-    'shine':'\033[5m'
+    'NULL':        '\033[m',
+    'bold':        '\033[1m',
+    'test':        '\033[2m',
+    'italic':      '\033[3m',
+    'underline':   '\033[4m',
+    'shine':       '\033[5m'
 }
 
 
-def createStudent(studentsList){
+def createStudent(studentsList= []):
     tmp = student()
-    tmp.setName(self, readName())
-    tmp.
-
-}
-
+    tmp.setName(readName())
+    tmp.setBirthday(readBirthday())
+    tmp.setAge()
+    tmp.setGender(readGender())
+    tmp.setCpf(readCPF())
+    tmp.setCode(len(studentsList) + 1)
+    printf('student successfully registered!', 'yellow', 'bold')
+    studentsList.append(tmp)
 
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
@@ -105,10 +122,10 @@ def mainMenu():
     print('[3] - UPDATE STUDENT')
     print('[4] - VIEW STUDENTS')
     tittle('MAIN MENU', '=', line = True)
-    inputf('> Your Choice: ')
+    return inputf('Your Choice: ')
 
 
-def readAge():
+def readBirthday():
     birthDay = personDate()
     day = month = year = 0
 
@@ -136,7 +153,7 @@ def readAge():
     birthDay.day = day
     birthDay.month = month
     birthDay.year = year
-    printf(f'the date {birthDay.toString()} was defined as the birthday.', 'blue', 'underline')
+    printf(f'The date {birthDay.toString()} was defined as the birthday.', 'blue', 'underline')
     return birthDay
 
 
@@ -145,23 +162,23 @@ def readCPF():
     if len(CPF) != 14:
         printf('Your CPF must have at exactly 13 digits!', 'red', 'underline')
         return readCPF()
-    printf(f'{CPF} was defined as the CPF.','blue', 'underline')
+    printf(f"'{CPF}' was defined as the CPF.",'blue', 'underline')
     return CPF
 
 
 def readGender():
     gender = 'NULL'
-    gender = inputf("> Gender(F/M): ")[0].strip().upper()
+    gender = inputf("Gender(F/M): ")[0].strip().upper()
     if gender not in 'FM':
         printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
         return readGender()
-    printf(f'{gender} was defined as the gender.', 'blue', 'underline')
+    printf(f"'{gender}' was defined as the gender.", 'blue', 'underline')
     return gender
 
 
 def readName():
     name = 'NULL'
-    name = inputf('> Name: ').strip()
+    name = inputf('Name: ').strip()
     if not name.replace(' ', '').isalpha():
         printf('INVALID NAME! TRY AGAIN!', 'red', 'underline')
         return readGender()
@@ -169,7 +186,7 @@ def readName():
         printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
         return readGender()
     name = name.title()
-    printf(f'{name} Was defined as the name.', 'blue', 'underline')
+    printf(f"'{name}' Was defined as the name.", 'blue', 'underline')
     return name
         
 
@@ -181,5 +198,3 @@ def tittle(string, char, color = "NULL", line = False):
         print(f'{char}' * (len(string) + 4))
     else:
         print(f'{char}' * (len(string) + 4))
-
-
