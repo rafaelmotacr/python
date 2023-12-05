@@ -5,9 +5,8 @@ from modulo import *
 quit = False
 defaultcode = f'{datetime.now().year}{datetime.now().month}'
 
-while(not quit):
-    mainMenu()
-    choice = input('> Your Choice: ')
+while (not quit):
+    choice = mainMenu()
     if choice == '0': 
         tittle('LEAVING..','=', 'red')
         quit = True

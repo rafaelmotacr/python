@@ -38,6 +38,7 @@ class student:
     def setGender(self, gender):
         self.gender = gender
 
+currentYear = datetime.now().year
 
 colors = {
     'NULL':'\033[m',
@@ -94,11 +95,11 @@ def mainMenu():
     print('[3] - UPDATE STUDENT')
     print('[4] - VIEW STUDENTS')
     tittle('MAIN MENU', '=', line = True)
+    inputf('> Your Choice: ')
 
 
 def readAge():
     birthDay = personDate()
-    currentYear = datetime.now().year
     day = month = year = 0
 
     while True:
@@ -134,32 +135,31 @@ def readCPF():
     if len(CPF) != 14:
         printf('Your CPF must have at exactly 13 digits!', 'red', 'underline')
         return readCPF()
+    printf(f'{CPF} was defined as the CPF.','blue', 'underline')
     return CPF
 
 
 def readGender():
     gender = 'NULL'
-    while gender not in 'FM':
-        gender = inputf("> Gender(F/M): ")[0].strip().upper()
-        if gender not in 'FM':
-            printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
+    gender = inputf("> Gender(F/M): ")[0].strip().upper()
+    if gender not in 'FM':
+        printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
+        return readGender()
     printf(f'{gender} was defined as the gender.', 'blue', 'underline')
     return gender
 
 
 def readName():
     name = 'NULL'
-    while True:
-        name = inputf('> Name: ').strip()
-        if not name.replace(' ', '').isalpha():
-            printf('INVALID NAME! TRY AGAIN!', 'red', 'underline')
-            continue
-        elif len(name) < 5:
-            printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
-            continue
-        name = name.title()
-        printf(f'{name} Was defined as the name.', 'blue', 'underline')
-        break
+    name = inputf('> Name: ').strip()
+    if not name.replace(' ', '').isalpha():
+        printf('INVALID NAME! TRY AGAIN!', 'red', 'underline')
+        return readGender()
+    elif len(name) < 5:
+        printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
+        return readGender()
+    name = name.title()
+    printf(f'{name} Was defined as the name.', 'blue', 'underline')
     return name
         
 
