@@ -46,7 +46,6 @@ while not quit:
         updateCentral(studentsList)
         print('UPDATE')
     elif choice == '4':
-        sortByName(studentsList)
-        #printStudents(studentsList)
+        printMenu(studentsList)
     else:
         tittle(f'INVALID OPTION!', '~', 'red')
