@@ -3,8 +3,8 @@ from modulo import *
 # Main
 
 quit = False
-defaultcode = f'{datetime.now().year}{datetime.now().month}'
-
+studentsList = []
+ 
 while (not quit):
     choice = mainMenu()
     if choice == '0': 
@@ -12,7 +12,7 @@ while (not quit):
         quit = True
         break
     if choice == '1':
-        oi = readCPF()
+        createStudent(studentsList)
         print('CREATE')
     elif choice == '2':
         #removestudent()

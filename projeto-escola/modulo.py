@@ -27,8 +27,8 @@ class student:
         self.age = age
 
 
-    def setCode(self, code):
-        self.code = code
+    def setCode(self, pos):
+        self.code = defaultcode + f'{pos}'
 
 
     def setCpf(self, CPF):
@@ -39,6 +39,7 @@ class student:
         self.gender = gender
 
 currentYear = datetime.now().year
+defaultcode = f'{datetime.now().year}{datetime.now().month}'
 
 colors = {
     'NULL':'\033[m',
@@ -60,6 +61,15 @@ effects = {
     'underline':'\033[4m',
     'shine':'\033[5m'
 }
+
+
+def createStudent(studentsList){
+    tmp = student()
+    tmp.setName(self, readName())
+    tmp.
+
+}
+
 
 
 def printf(string = "NULL", color = "NULL", effect = "NULL"):
