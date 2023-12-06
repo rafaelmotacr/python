@@ -429,7 +429,7 @@ def printMenu(studentsList):
     print('[1] - SORT BY AGE')
     print('[2] - SORT BY DEFAULT')
     print('[3] - SORT BY NAME')
-    tittle('LIST MENU', '-', 'blue', True)
+    tittle('LIST MENU', '=', 'blue', True)
     printMenuChoice = inputf('Your choice: ')
     
     if printMenuChoice == '0':
