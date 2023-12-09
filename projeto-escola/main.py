@@ -4,7 +4,8 @@ from modulo import *
 
 quit = False
 studentsList = []
- 
+
+
 day = personDate()
 day.setDay(9)
 day.setMonth(1)
@@ -44,8 +45,7 @@ while not quit:
         removeStudent(studentsList)
     elif choice == '3':
         updateCentral(studentsList)
-        print('UPDATE')
     elif choice == '4':
-        printMenu(studentsList)
+        printCentral(studentsList)
     else:
         tittle(f'INVALID OPTION!', '~', 'red')

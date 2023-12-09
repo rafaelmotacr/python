@@ -26,6 +26,7 @@ effects = {
     'shine':       '\033[5m'
 }
 
+exit = '0'
 
 class personDate:
     def __init__(self,day = 0, month = 0, year = 0):
@@ -109,9 +110,7 @@ class student:
 # Crud functions
 
 def createStudent(studentsList = []):
-
     tittle('CREATE STUDENT','=', 'green')
-
     tmp = student()
     tmp.setName(readName())
     tmp.setBirthday(readBirthday())
@@ -119,61 +118,57 @@ def createStudent(studentsList = []):
     tmp.setGender(readGender())
     tmp.setCpf(readCPF())
     tmp.setCode(len(studentsList) + 1)
-
     printf('Student successfully registered!', 'yellow', 'bold')
     studentsList.append(tmp)
 
 
 def removeStudent(studentsList = []):
 
-    choice = code = 0
+    choice = str()
+    code = 0
     target = student()
     
     if len(studentsList) == 0:
         printf("There aren't students to remove. Come back later...", 'red', 'underline')
         return
 
-    tittle('REMOVE MENU','=', 'red')
-    print('[0] - BACK')
-    print('[1] - REMOVE USING CODE')
-    print('[2] - VIEW STUDENTS AND REMOVE')
-    tittle('REMOVE MENU','=', 'red', True)
-    choice = inputf('Your choice: ', mode= 'str')
-
-    if choice == '0':
-        return
-    elif choice == '1':
-
-        code = inputf('Enter the student code: ')
-
-        if validateStudent(code, studentsList):
-
-            target = searchStudent(code, studentsList)
-            printf('Student suceffuly removed.', 'blue', 'underline')
-            studentsList.remove(target)
-
-        else:
-
-            printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
-            return removeStudent(studentsList)
-
-    elif choice == '2':
-
-        printList(studentsList)
-        code = inputf('Your choice: ', mode ='int')
-
-        if(code > len(studentsList) or code <= 0):
-
-            printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
-            return removeStudent(studentsList)
+    while choice not in exit:
         
+        choice = removeMenu()
+
+        if choice == exit:
+            return
+        
+        elif choice == '1':
+
+            code = inputf('Enter the student code: ')
+
+            if validateStudent(code, studentsList):
+
+                target = searchStudent(code, studentsList)
+                printf('Student suceffuly removed.', 'blue', 'underline')
+                studentsList.remove(target)
+
+            else:
+
+                printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
+
+        elif choice == '2':
+
+            printList(studentsList)
+            code = inputf('Your choice: ', mode ='int')
+
+            if(code > len(studentsList) or code <= 0):
+
+                printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
+            
+            else:
+
+                printf('Student suceffuly removed.', 'blue', 'underline')
+                studentsList.pop(code - 1)
+
         else:
-
-            printf('Student suceffuly removed.', 'blue', 'underline')
-            studentsList.pop(code - 1)
-
-    else:
-        printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
+            printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
 
 
 def updateCentral(studentsList = []):
@@ -182,62 +177,57 @@ def updateCentral(studentsList = []):
         printf("There aren't students to update. Come back later...", 'red', 'underline')
         return
 
-    choice = code = 0
+    choice = str()    
+    code = 0
     target = student()
 
-    tittle('UPDATE MENU','=', 'purple')
-    print('[0] - BACK')
-    print('[1] - UPDATE USING CODE')
-    print('[2] - VIEW STUDENTS AND UPDATE')
-    tittle('UPDATE MENU','=', 'purple', True)
+    while choice not in exit:
 
-    choice = inputf('Your choice: ', mode= 'str')
+        choice = updateCentralMenu()
 
-    if choice == '0':
-        return
-    elif choice == '1':
-
-        code = inputf('Enter the student code: ')
-
-        if validateStudent(code, studentsList):
-
-            target = searchStudent(code, studentsList)
-            updateStudent(target)
-
-        else:
-
-            printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
-            return updateCentral(studentsList)
-            
-    elif choice == '2':
-
-        printList(studentsList)
-        code = inputf('Your choice: ', mode ='int')
-
-        if(code > len(studentsList) or code <= 0):
-
-            printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
-            return updateCentral(studentsList)
+        if choice == exit:
+            return
         
+        elif choice == '1':
+
+            code = inputf('Enter the student code: ')
+
+            if validateStudent(code, studentsList):
+
+                target = searchStudent(code, studentsList)
+                updateStudent(target)
+
+            else:
+
+                printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
+                
+        elif choice == '2':
+
+            printList(studentsList)
+            code = inputf('Your choice: ', mode ='int')
+
+            if(code > len(studentsList) or code <= 0):
+
+                printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
+            
+            else:
+
+                updateStudent(studentsList[code -1])
+
         else:
+            printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
 
-            updateStudent(studentsList[code -1])
-
-    else:
-        printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
-        updateCentral(studentsList)
 
 def updateStudent(person = student()):
 
-    quit = False
+    choice = str()
 
-    while not quit:
+    while choice not in exit:
         
         choice = updateMenu(f'{person.getName()}')
         tittle('> your choice', '=', line = True)
 
-        if choice == '0':
-            quit = True
+        if choice == exit:
             continue
         elif choice == '1':
             printPerson(0, person, True)
@@ -256,7 +246,6 @@ def updateStudent(person = student()):
             printf('Name updated suceffuly.', 'blue', 'underline')
         else:
             printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
-            updateStudent(person)
 
 # Menu / UI functions
 
@@ -268,7 +257,35 @@ def mainMenu():
     print('[3] - UPDATE STUDENT')
     print('[4] - VIEW STUDENTS')
     tittle('MAIN MENU', '=', line = True)
-    return inputf('Your Choice: ')
+    return inputf('Your choice: ', mode= 'str')
+
+
+def printMenu():
+    tittle('LIST MENU', '=', 'blue')
+    print('[0] - BACK')
+    print('[1] - SORT BY AGE')
+    print('[2] - SORT BY DEFAULT')
+    print('[3] - SORT BY NAME')
+    tittle('LIST MENU', '=', 'blue', True)
+    return inputf('Your choice: ', mode = 'str')
+
+
+def removeMenu():
+    tittle('REMOVE MENU','=', 'red')
+    print('[0] - BACK')
+    print('[1] - REMOVE USING CODE')
+    print('[2] - VIEW STUDENTS AND REMOVE')
+    tittle('REMOVE MENU','=', 'red', True)
+    return inputf('Your choice: ', mode= 'str')
+
+
+def updateCentralMenu():
+    tittle('UPDATE MENU','=', 'purple')
+    print('[0] - BACK')
+    print('[1] - UPDATE USING CODE')
+    print('[2] - VIEW STUDENTS AND UPDATE')
+    tittle('UPDATE MENU','=', 'purple', True)
+    return inputf('Your choice: ', mode= 'str')
 
 
 def updateMenu(string = str()):
@@ -280,7 +297,7 @@ def updateMenu(string = str()):
     print('[4] - UPDATE GENDER')
     print('[5] - UPDATE NAME')
     tittle(f'{string.upper()}', '=', 'purple', True)
-    return inputf('Your Choice: ')
+    return inputf('Your Choice: ', mode = 'str')
 
 
 def tittle(string, char, color = "NULL", line = False):
@@ -361,9 +378,9 @@ def readCPF():
 
     CPF = inputf('CPF: ')
 
-    if len(CPF) != 14:
+    while len(CPF) != 14:
         printf('YOUR CPF MUST HAVE EXACTLY 14 DIGITS!', 'red', 'underline')
-        return readCPF()
+        CPF = inputf('CPF: ')
     printf(f"'{CPF}' was defined as the CPF.",'blue', 'underline')
     return CPF
 
@@ -373,15 +390,17 @@ def readGender():
     gender = 'NULL'
     gender = inputf("Gender(F/M): ").strip().upper()
 
-    if(gender == ''):
-        printf(f"Gender can't be left blank. Try again.", 'red', 'underline')
-        return readGender() 
-    gender = gender[0]
+    while gender not in 'FM':
+        if(gender == ''):
+            printf(f"Gender can't be left blank. Try again.", 'red', 'underline')
+            
+        gender = gender[0]
 
-    if gender not in 'FM':
-        printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
-        return readGender()
-    
+        if gender not in 'FM':
+            printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
+
+        gender = inputf("Gender(F/M): ").strip().upper()
+
     printf(f"'{gender}' was defined as the gender.", 'blue', 'underline')
     return gender
 
@@ -389,16 +408,19 @@ def readGender():
 def readName():
 
     name = 'NULL'
+    valid = False
     name = inputf('Name: ').strip()
 
-    if not name.replace(' ', '').isalpha():
-        printf('INVALID NAME! TRY AGAIN!', 'red', 'underline')
-        return readName()
-    
-    elif len(name) < 5:
-        printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
-        return readName()
-    
+    while not valid:
+        if not name.replace(' ', '').isalpha():
+            printf('INVALID NAME! TRY AGAIN!', 'red', 'underline')
+        
+        elif len(name) < 5:
+            printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
+        else:
+            valid = True
+        name = inputf('Name: ').strip()
+        
     name = name.title()
     printf(f"'{name}' Was defined as the name.", 'blue', 'underline')
     return name
@@ -419,20 +441,14 @@ def validateStudent(target = str(), studentList = []):
 
 # Print functions
 
-def printMenu(studentsList):
+def printCentral(studentsList):
 
     if(len(studentsList) == 0):
         printf('There are no students to show righ now. Come back later...', 'red', 'underline')
     
-    tittle('LIST MENU', '=', 'blue')
-    print('[0] - BACK')
-    print('[1] - SORT BY AGE')
-    print('[2] - SORT BY DEFAULT')
-    print('[3] - SORT BY NAME')
-    tittle('LIST MENU', '-', 'blue', True)
-    printMenuChoice = inputf('Your choice: ')
+    printMenuChoice = printMenu()
     
-    if printMenuChoice == '0':
+    if printMenuChoice == exit:
         return
     elif printMenuChoice == '1':
         sortByAge(studentsList)
@@ -443,6 +459,7 @@ def printMenu(studentsList):
     else:
         printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
         
+
 def printList(studentsList = []):
 
     tittle('LISTING STUDENTS', '=', 'green')
