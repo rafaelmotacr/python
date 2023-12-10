@@ -124,7 +124,7 @@ def createStudent(studentsList = []):
 
 def removeStudent(studentsList = []):
 
-    choice = str()
+    choice = ' '
     code = 0
     target = student()
     
@@ -141,6 +141,7 @@ def removeStudent(studentsList = []):
         
         elif choice == '1':
 
+            tittle('> Enter the student code:', '=', line = True)
             code = inputf('Enter the student code: ')
 
             if validateStudent(code, studentsList):
@@ -156,6 +157,7 @@ def removeStudent(studentsList = []):
         elif choice == '2':
 
             printList(studentsList)
+            tittle('> Your choice:', '=', line = True)
             code = inputf('Your choice: ', mode ='int')
 
             if(code > len(studentsList) or code <= 0):
@@ -177,7 +179,7 @@ def updateCentral(studentsList = []):
         printf("There aren't students to update. Come back later...", 'red', 'underline')
         return
 
-    choice = str()    
+    choice = ' '  
     code = 0
     target = student()
 
@@ -189,21 +191,23 @@ def updateCentral(studentsList = []):
             return
         
         elif choice == '1':
-
+            
+            tittle('> Enter the student code:', '=', line = True)
             code = inputf('Enter the student code: ')
-
+            print('eu li ein')
             if validateStudent(code, studentsList):
-
+                print('eu li nada')
                 target = searchStudent(code, studentsList)
                 updateStudent(target)
 
             else:
-
+                print('eu li oes')
                 printf('INVALID STUDENT! TRY AGAIN!', 'red', 'underline')
                 
         elif choice == '2':
 
             printList(studentsList)
+            tittle('> Your choice:', '=', line = True)
             code = inputf('Your choice: ', mode ='int')
 
             if(code > len(studentsList) or code <= 0):
@@ -220,7 +224,7 @@ def updateCentral(studentsList = []):
 
 def updateStudent(person = student()):
 
-    choice = str()
+    choice = ' '
 
     while choice not in exit:
         
@@ -419,6 +423,8 @@ def readName():
             printf('THE NAME MUST CONTAIN AT LEAST FIVE(5) LETTERS! TRY AGAIN!', 'red', 'underline')
         else:
             valid = True
+            continue
+    
         name = inputf('Name: ').strip()
         
     name = name.title()
@@ -446,18 +452,21 @@ def printCentral(studentsList):
     if(len(studentsList) == 0):
         printf('There are no students to show righ now. Come back later...', 'red', 'underline')
     
-    printMenuChoice = printMenu()
-    
-    if printMenuChoice == exit:
-        return
-    elif printMenuChoice == '1':
-        sortByAge(studentsList)
-    elif printMenuChoice == '2':
-        printList(studentsList)
-    elif printMenuChoice == '3':
-        sortByName(studentsList)
-    else:
-        printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
+    printMenuChoice = ' '
+    while printMenuChoice not in exit:
+
+        printMenuChoice = printMenu()
+        
+        if printMenuChoice == exit:
+            return
+        elif printMenuChoice == '1':
+            sortByAge(studentsList)
+        elif printMenuChoice == '2':
+            printList(studentsList)
+        elif printMenuChoice == '3':
+            sortByName(studentsList)
+        else:
+            printf('INVALID CHOICE! TRY AGAIN!', 'red', 'underline')
         
 
 def printList(studentsList = []):
