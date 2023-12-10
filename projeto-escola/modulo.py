@@ -334,13 +334,17 @@ def readInt(string = 'NULL', color = 'green',):
     tmp = input(f'> {string}{colors[color]}')
     print('\033[m', end='')
 
-    try:
-        tmp = int(tmp)
-    except ValueError:
-        printf('THIS ENTRY MUST BE AN INTEGER!', 'red', 'underline')
-        return readInt(string, color)
-    else:
-        return tmp
+ 
+    while True:
+        try:
+            tmp = int(tmp)
+        except ValueError:
+            printf('THIS ENTRY MUST BE AN INTEGER!', 'red', 'underline')
+            tmp = input(f'> {string}{colors[color]}')
+            continue
+        else:
+            break
+    return tmp
 
 
 # Functions that reads and formats data for the student
