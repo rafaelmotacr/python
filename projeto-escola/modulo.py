@@ -369,7 +369,7 @@ def readBirthday():
 
     while True:
         year = inputf('Year: ', mode = 'int')
-        if not(currentYear > year and  year > 0 and 1980 < year):
+        if not(currentYear > year and  year > 0 and currentYear - 100 < year):
             printf('INVALID YEAR!', 'red', 'underline')
             continue
         break
@@ -396,14 +396,12 @@ def readCPF():
 def readGender():
 
     gender = 'NULL'
-    gender = inputf("Gender(F/M): ").strip().upper()
+    gender = inputf("Gender(F/M): ").strip().upper()[0]
 
     while gender not in 'FM':
         if(gender == ''):
             printf(f"Gender can't be left blank. Try again.", 'red', 'underline')
             
-        gender = gender[0]
-
         if gender not in 'FM':
             printf(f'INVALID GENDER ({gender})! TRY AGAIN!', 'red', 'underline')
 
